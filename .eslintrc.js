@@ -1,0 +1,52 @@
+module.exports = {
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: './tsconfig.json',
+  },
+  plugins: ['@typescript-eslint'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/strict-type-checked',
+    'plugin:@typescript-eslint/stylistic-type-checked',
+  ],
+  root: true,
+  env: {
+    node: true,
+    jest: true,
+  },
+  rules: {
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/explicit-function-return-type': 'error',
+    '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/prefer-readonly': 'error',
+    '@typescript-eslint/no-floating-promises': 'error',
+    '@typescript-eslint/no-empty-object-type': 'error',
+    '@typescript-eslint/no-unsafe-function-type': 'error',
+    '@typescript-eslint/no-wrapper-object-types': 'error',
+    '@typescript-eslint/no-require-imports': 'error',
+    '@typescript-eslint/no-unsafe-unary-minus': 'error',
+    '@typescript-eslint/no-unnecessary-type-parameters': 'error',
+    '@typescript-eslint/return-await': 'error',
+    '@typescript-eslint/prefer-find': 'error',
+    '@typescript-eslint/prefer-includes': 'error',
+    '@typescript-eslint/prefer-regexp-exec': 'error',
+    'no-console': 'error',
+    'no-debugger': 'error',
+  },
+  ignorePatterns: ['dist/', 'node_modules/', '*.js'],
+  overrides: [
+    {
+      files: ['**/*.test.ts', '**/*.spec.ts'],
+      rules: {
+        '@typescript-eslint/await-thenable': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off',
+        '@typescript-eslint/no-unnecessary-type-assertion': 'off',
+        '@typescript-eslint/require-await': 'off',
+      },
+    },
+  ],
+};
