@@ -132,6 +132,30 @@ npm run lint && npm run typecheck
 npm test -- --testPathPattern=web-crypto
 ```
 
+## Local GitHub Actions Testing
+
+Use `act` to test GitHub Actions workflows locally before pushing:
+
+```bash
+# Validate all workflow syntax
+act --validate
+
+# Dry run all workflows for push event
+act -n push
+
+# Test specific job (dry run)
+act -n -j security
+act -n -j build
+
+# Test with specific Node.js matrix
+act push -j test --matrix node-version:20
+
+# List all available workflows and jobs
+act --list
+```
+
+**Configuration**: Act is configured to use `catthehacker/ubuntu:act-latest` medium Docker image in `~/.local/act/actrc`.
+
 ## Important Implementation Notes
 
 ### Environment Detection
