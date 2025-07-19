@@ -11,7 +11,8 @@
       "Bash(npm run build:*)",
       "Bash(license-checker:*)",
       "Bash(act push:*)",
-      "Bash(act:*)"
+      "Bash(act:*)",
+      "Bash(git add:*)"
     ],
     "deny": []
   }

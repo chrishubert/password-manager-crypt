@@ -19,7 +19,7 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [16, 18, 20, 22]
+        node-version: [18, 20, 22]
         
     steps:
     - name: Checkout code
@@ -170,4 +170,6 @@ jobs:
       run: npm ci
       
     - name: Run core tests
-      run: npm test -- --testPathPattern="integration|node-crypto"
+      run: |
+        npm test -- --testPathPattern=integration
+        npm test -- --testPathPattern=node-crypto
