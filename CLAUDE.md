@@ -132,27 +132,70 @@ npm run lint && npm run typecheck
 npm test -- --testPathPattern=web-crypto
 ```
 
-## Local GitHub Actions Testing
+## Test Coverage
 
-Use `act` to test GitHub Actions workflows locally before pushing:
+Check test coverage before committing:
 
 ```bash
-# Validate all workflow syntax
+# Run tests with coverage report
+npm run test:coverage
+
+# Coverage thresholds (configured in jest.config.ts): 90% minimum for all metrics
+# Current status: 95.23% statements, 97.4% branches, 100% functions, 95.18% lines
+```
+
+**Coverage Requirements**: 
+- **Minimum**: 90% statements, branches, functions, lines (enforced by Jest)
+- **Target**: >95% for security-critical crypto operations
+- **Mandatory**: 100% function coverage - every crypto function must be tested
+- **Required**: Comprehensive error scenario testing for all crypto operations
+
+## Local GitHub Actions Testing
+
+Use `act` strategically for different validation levels:
+
+### **Level 1: Workflow Syntax Validation (Fast)**
+```bash
+# Validate all workflow YAML syntax and structure
 act --validate
 
-# Dry run all workflows for push event
-act -n push
+# List all available workflows and jobs  
+act --list
 
-# Test specific job (dry run)
+# Dry run for workflow structure verification (syntax only)
+act -n push
 act -n -j security
 act -n -j build
+```
 
-# Test with specific Node.js matrix
+### **Level 2: Real Execution Testing (Slower but Comprehensive)**
+```bash
+# Actually execute workflows (not just syntax check)
+act push -j security        # Run security job completely
+act push -j build          # Run build job completely
+
+# Test specific Node.js matrix combinations
+act push -j test --matrix node-version:18
 act push -j test --matrix node-version:20
 
-# List all available workflows and jobs
-act --list
+# Run with verbose output for debugging
+act push -j test -v
 ```
+
+### **Level 3: Cross-platform Testing**
+```bash
+# Note: Act cannot test Windows/macOS - use GitHub Actions for full coverage
+# Act limitations:
+# - Only tests Ubuntu containers
+# - Environment differences from GitHub runners  
+# - Test mocking may behave differently
+```
+
+**Act Best Practices**:
+- **Dry run (`-n`)**: Quick workflow syntax validation only
+- **Real execution**: Catches more issues but takes longer and may miss environment-specific problems
+- **GitHub Actions**: Ultimate truth for cross-platform and environment-sensitive tests
+- **Defense in depth**: Local tests + Act validation + GitHub CI
 
 **Configuration**: Act is configured to use `catthehacker/ubuntu:act-latest` medium Docker image in `~/.local/act/actrc`.
 
