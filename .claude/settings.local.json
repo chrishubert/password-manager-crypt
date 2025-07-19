@@ -16,7 +16,15 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(npx jest:*)",
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:kulshekhar.github.io)",
+      "WebFetch(domain:jestjs.io)",
+      "Bash(npm outdated)",
+      "Bash(npm view:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run test:coverage:*)"
     ],
     "deny": []
   }
