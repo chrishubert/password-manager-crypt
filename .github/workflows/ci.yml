@@ -171,5 +171,5 @@ jobs:
       
     - name: Run core tests
       run: |
-        npm test -- --testPathPattern=integration
-        npm test -- --testPathPattern=node-crypto
+        npm test -- --testPathPatterns=integration
+        npm test -- --testPathPatterns=node-crypto
