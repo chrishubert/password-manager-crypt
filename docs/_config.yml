@@ -1,0 +1,33 @@
+# GitHub Pages configuration
+title: "Password Manager Cryptographic Library"
+description: "Secure, zero-dependency cryptographic library for password managers with universal runtime support"
+
+# Theme configuration
+theme: minima
+
+# Navigation
+header_pages:
+  - index.html
+  - api.md
+  - examples.md
+  - security.md
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# SEO
+url: "https://chrishubert.github.io"
+baseurl: "/password-manager-crypt"
+
+# Social
+github_username: chrishubert
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
