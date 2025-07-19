@@ -1,7 +1,7 @@
 # Password Manager Cryptographic Library
 
-[![CI/CD Pipeline](https://github.com/YOUR_USERNAME/password-manager-crypt/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/password-manager-crypt/actions/workflows/ci.yml)
-[![Security Checks](https://github.com/YOUR_USERNAME/password-manager-crypt/actions/workflows/security.yml/badge.svg)](https://github.com/YOUR_USERNAME/password-manager-crypt/actions/workflows/security.yml)
+[![CI/CD Pipeline](https://github.com/chrishubert/password-manager-crypt/actions/workflows/ci.yml/badge.svg)](https://github.com/chrishubert/password-manager-crypt/actions/workflows/ci.yml)
+[![Security Checks](https://github.com/chrishubert/password-manager-crypt/actions/workflows/security.yml/badge.svg)](https://github.com/chrishubert/password-manager-crypt/actions/workflows/security.yml)
 [![npm version](https://badge.fury.io/js/password-manager-crypt.svg)](https://badge.fury.io/js/password-manager-crypt)
 
 A secure, zero-dependency cryptographic library designed specifically for password managers, implementing industry-standard encryption with zero-knowledge architecture principles. 

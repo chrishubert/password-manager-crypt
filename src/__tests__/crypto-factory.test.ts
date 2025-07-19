@@ -55,6 +55,25 @@ describe('DefaultCryptoServiceFactory', () => {
       expect(() => factory.createForEnvironment('worker'))
         .toThrow(CryptoErrorImpl);
     });
+
+    it('should throw error for node environment when not in Node.js', () => {
+      // Mock non-Node environment by making process access throw
+      const originalProcess = global.process;
+      Object.defineProperty(global, 'process', {
+        get() { throw new Error('process is not defined'); },
+        configurable: true
+      });
+      
+      expect(() => factory.createForEnvironment('node'))
+        .toThrow(CryptoErrorImpl);
+        
+      Object.defineProperty(global, 'process', { value: originalProcess, configurable: true });
+    });
+
+    it('should throw error for unknown environment', () => {
+      expect(() => factory.createForEnvironment('unknown' as any))
+        .toThrow(CryptoErrorImpl);
+    });
   });
 
   describe('createForPerformance', () => {
@@ -95,6 +114,41 @@ describe('DefaultCryptoServiceFactory', () => {
       delete (global as unknown as { crypto?: unknown }).crypto;
       const service = factory.createForPerformance('medium');
       expect(service).toBeInstanceOf(NodeCryptoService);
+    });
+
+    it('should throw error for high performance when no crypto available in non-Node environment', () => {
+      // Mock non-Node environment 
+      const originalProcess = global.process;
+      Object.defineProperty(global, 'process', {
+        get() { throw new Error('process is not defined'); },
+        configurable: true
+      });
+      delete (global as unknown as { crypto?: unknown }).crypto;
+      
+      expect(() => factory.createForPerformance('high'))
+        .toThrow(CryptoErrorImpl);
+        
+      Object.defineProperty(global, 'process', { value: originalProcess, configurable: true });
+    });
+
+    it('should throw error for medium performance when no crypto available in non-Node environment', () => {
+      // Mock non-Node environment
+      const originalProcess = global.process;
+      Object.defineProperty(global, 'process', {
+        get() { throw new Error('process is not defined'); },
+        configurable: true
+      });
+      delete (global as unknown as { crypto?: unknown }).crypto;
+      
+      expect(() => factory.createForPerformance('medium'))
+        .toThrow(CryptoErrorImpl);
+        
+      Object.defineProperty(global, 'process', { value: originalProcess, configurable: true });
+    });
+
+    it('should throw error for unknown performance level', () => {
+      expect(() => factory.createForPerformance('unknown' as any))
+        .toThrow(CryptoErrorImpl);
     });
   });
 

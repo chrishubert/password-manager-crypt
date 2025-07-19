@@ -105,6 +105,22 @@ describe('NodeCryptoService', () => {
         .rejects.toThrow(CryptoErrorImpl);
     });
 
+    it('should handle internal crypto errors', async () => {
+      const password = 'test-password-123';
+      const salt = service.generateSalt();
+      
+      // Use invalid iterations (negative number) to trigger error
+      const invalidParams = {
+        iterations: -1,
+        keyLength: 32,
+        algorithm: 'pbkdf2' as const,
+        hashFunction: 'sha256' as const
+      };
+      
+      await expect(service.deriveKey(password, salt, invalidParams))
+        .rejects.toThrow(CryptoErrorImpl);
+    });
+
   });
 
   describe('encrypt and decrypt', () => {
@@ -206,6 +222,110 @@ describe('NodeCryptoService', () => {
       } catch (error) {
         expect(error).toBeInstanceOf(CryptoErrorImpl);
       }
+    });
+
+    it('should handle encryption errors', async () => {
+      const data = new TextEncoder().encode('Hello, World!');
+      const key = new Uint8Array(32);
+      
+      // Mock crypto module to throw error
+      const crypto = require('crypto');
+      const originalCreateCipheriv = crypto.createCipheriv;
+      crypto.createCipheriv = jest.fn().mockImplementation(() => {
+        throw new Error('Internal encryption error');
+      });
+      
+      try {
+        await service.encrypt(data, key);
+        fail('Expected error to be thrown');
+      } catch (error) {
+        expect(error).toBeInstanceOf(CryptoErrorImpl);
+      }
+      
+      crypto.createCipheriv = originalCreateCipheriv;
+    });
+
+    it('should throw error for empty encrypted data during decryption', async () => {
+      const key = new Uint8Array(32);
+      const emptyEncryptedData = {
+        data: new Uint8Array(0),
+        iv: new Uint8Array(12),
+        salt: new Uint8Array(32),
+        authTag: new Uint8Array(16)
+      };
+      
+      try {
+        await service.decrypt(emptyEncryptedData, key);
+        fail('Expected error to be thrown');
+      } catch (error) {
+        expect(error).toBeInstanceOf(CryptoErrorImpl);
+      }
+    });
+
+    it('should throw error for invalid IV length during decryption', async () => {
+      const key = new Uint8Array(32);
+      const invalidIVData = {
+        data: new Uint8Array(16),
+        iv: new Uint8Array(8), // Invalid IV length
+        salt: new Uint8Array(32),
+        authTag: new Uint8Array(16)
+      };
+      
+      try {
+        await service.decrypt(invalidIVData, key);
+        fail('Expected error to be thrown');
+      } catch (error) {
+        expect(error).toBeInstanceOf(CryptoErrorImpl);
+      }
+    });
+
+    it('should throw error for invalid auth tag length during decryption', async () => {
+      const key = new Uint8Array(32);
+      const invalidAuthTagData = {
+        data: new Uint8Array(16),
+        iv: new Uint8Array(12),
+        salt: new Uint8Array(32),
+        authTag: new Uint8Array(8) // Invalid auth tag length
+      };
+      
+      try {
+        await service.decrypt(invalidAuthTagData, key);
+        fail('Expected error to be thrown');
+      } catch (error) {
+        expect(error).toBeInstanceOf(CryptoErrorImpl);
+      }
+    });
+  });
+
+  describe('generateSalt error handling', () => {
+    it('should handle randomBytes errors', () => {
+      // Mock crypto module to throw error
+      const crypto = require('crypto');
+      const originalRandomBytes = crypto.randomBytes;
+      crypto.randomBytes = jest.fn().mockImplementation(() => {
+        throw new Error('Internal random error');
+      });
+      
+      expect(() => service.generateSalt())
+        .toThrow(CryptoErrorImpl);
+        
+      crypto.randomBytes = originalRandomBytes;
+    });
+  });
+
+  describe('generateIV error handling', () => {
+    it('should handle randomBytes errors', () => {
+      // Mock crypto module to throw error
+      const crypto = require('crypto');
+      const originalRandomBytes = crypto.randomBytes;
+      crypto.randomBytes = jest.fn().mockImplementation(() => {
+        throw new Error('Internal random error');
+      });
+      
+      expect(() => service.generateIV())
+        .toThrow(CryptoErrorImpl);
+        
+      crypto.randomBytes = originalRandomBytes;
     });
   });
 

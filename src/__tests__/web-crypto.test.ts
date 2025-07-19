@@ -103,6 +103,14 @@ describe('WebCryptoService', () => {
       const iv2 = service.generateIV();
       expect(iv1).not.toEqual(iv2);
     });
+
+    it('should throw error if crypto.getRandomValues fails', () => {
+      mockCrypto.getRandomValues.mockImplementation(() => {
+        throw new Error('Random generation failed');
+      });
+
+      expect(() => service.generateIV()).toThrow(CryptoErrorImpl);
+    });
   });
 
   describe('deriveKey', () => {
