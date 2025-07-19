@@ -4,9 +4,9 @@
 [![Security Checks](https://github.com/chrishubert/password-manager-crypt/actions/workflows/security.yml/badge.svg)](https://github.com/chrishubert/password-manager-crypt/actions/workflows/security.yml)
 [![npm version](https://badge.fury.io/js/password-manager-crypt.svg)](https://badge.fury.io/js/password-manager-crypt)
 
-A secure, zero-dependency cryptographic library designed specifically for password managers, implementing industry-standard encryption with zero-knowledge architecture principles. 
+A secure, zero-dependency cryptographic library designed specifically for password managers, implementing industry-standard encryption with zero-knowledge architecture principles.
 
-**✅ Universal Support**: Works seamlessly across **Node.js**, **CloudFlare Workers**, and **Browsers**.
+**✅ Production Ready**: Now available on NPM with universal support for **Node.js**, **CloudFlare Workers**, and **Browsers**.
 
 ## Features
 
@@ -458,14 +458,15 @@ const decrypted = await cryptoService.decrypt(encrypted, key);
 
 ## Changelog
 
-### v0.2.0
+### v0.2.0 (2025-07-19) - Production Release
 
 - ✅ **Universal Runtime Support**: CloudFlare Workers and Browser environments
-- ✅ **WebCrypto Implementation**: 2-15x performance improvement for large operations
+- ✅ **WebCrypto Implementation**: 2-15x performance improvement for large operations  
 - ✅ **Smart Factory Pattern**: Automatic environment detection and optimization
 - ✅ **Consistent Async API**: All crypto operations now return Promises
-- ✅ **Comprehensive Testing**: 72 tests including NIST test vectors
+- ✅ **Comprehensive Testing**: 85 tests including NIST test vectors and cross-environment validation
 - ✅ **Security Maintained**: All timing attack protections preserved
+- ✅ **NPM Published**: Available with provenance attestation for supply chain security
 - 🔄 **Breaking Change**: encrypt/decrypt methods now async
 
 ### v0.1.0
