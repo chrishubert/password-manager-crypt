@@ -53,6 +53,7 @@ const browserService = cryptoServiceFactory.createForEnvironment('browser');
 
 ### Complete Example
 
+```typescript
 // Encrypt vault data
 async function encryptVault(masterPassword: string, vaultData: string): Promise<{
   encryptedData: EncryptedData;
