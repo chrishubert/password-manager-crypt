@@ -216,6 +216,16 @@ act push -j test -v
 - **GitHub Actions handles releases**: Automated workflow publishes to NPM on tag creation
 - **Workflow resilience**: Release creation step handles existing releases gracefully
 
+## Repository Security
+
+✅ **Branch Protection**: Main branch is protected with the following rules:
+- **Force push protection**: Prevents force pushing to main branch
+- **Deletion protection**: Prevents accidental deletion of main branch  
+- **Pull request reviews**: Requires 1 approving review before merge
+- **Dismiss stale reviews**: Automatically dismisses outdated reviews
+- **Conversation resolution**: Requires all conversations to be resolved before merge
+- **Status checks**: Ready for CI/CD status check requirements
+
 ## Important Implementation Notes
 
 ### Environment Detection
