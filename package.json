@@ -21,9 +21,9 @@
   "scripts": {
     "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:types",
     "build:cjs": "tsc -p tsconfig.json",
-    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:esm": "tsc -p tsconfig.esm.json && node -e \"require('fs').copyFileSync('dist-esm/index.js', 'dist/index.esm.js')\"",
     "build:types": "tsc -p tsconfig.types.json",
-    "clean": "rimraf dist",
+    "clean": "rimraf dist dist-esm",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
