@@ -117,12 +117,9 @@ describe('DefaultCryptoServiceFactory', () => {
     });
 
     it('should throw error for high performance when no crypto available in non-Node environment', () => {
-      // Mock non-Node environment 
+      // Mock non-Node environment by completely removing process
       const originalProcess = global.process;
-      Object.defineProperty(global, 'process', {
-        get() { throw new Error('process is not defined'); },
-        configurable: true
-      });
+      delete (global as unknown as { process?: unknown }).process;
       delete (global as unknown as { crypto?: unknown }).crypto;
       
       expect(() => factory.createForPerformance('high'))
@@ -132,12 +129,9 @@ describe('DefaultCryptoServiceFactory', () => {
     });
 
     it('should throw error for medium performance when no crypto available in non-Node environment', () => {
-      // Mock non-Node environment
+      // Mock non-Node environment by completely removing process
       const originalProcess = global.process;
-      Object.defineProperty(global, 'process', {
-        get() { throw new Error('process is not defined'); },
-        configurable: true
-      });
+      delete (global as unknown as { process?: unknown }).process;
       delete (global as unknown as { crypto?: unknown }).crypto;
       
       expect(() => factory.createForPerformance('medium'))

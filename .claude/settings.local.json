@@ -12,7 +12,10 @@
       "Bash(license-checker:*)",
       "Bash(act push:*)",
       "Bash(act:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(npx jest:*)"
     ],
     "deny": []
   }
