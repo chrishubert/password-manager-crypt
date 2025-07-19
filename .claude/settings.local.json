@@ -9,7 +9,9 @@
       "Bash(npm run lint)",
       "Bash(npm test:*)",
       "Bash(npm run build:*)",
-      "Bash(license-checker:*)"
+      "Bash(license-checker:*)",
+      "Bash(act push:*)",
+      "Bash(act:*)"
     ],
     "deny": []
   }

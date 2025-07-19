@@ -71,7 +71,7 @@ describe('DefaultCryptoServiceFactory', () => {
     });
 
     it('should throw error for unknown environment', () => {
-      expect(() => factory.createForEnvironment('unknown' as any))
+      expect(() => factory.createForEnvironment('unknown' as never))
         .toThrow(CryptoErrorImpl);
     });
   });
@@ -147,7 +147,7 @@ describe('DefaultCryptoServiceFactory', () => {
     });
 
     it('should throw error for unknown performance level', () => {
-      expect(() => factory.createForPerformance('unknown' as any))
+      expect(() => factory.createForPerformance('unknown' as never))
         .toThrow(CryptoErrorImpl);
     });
   });

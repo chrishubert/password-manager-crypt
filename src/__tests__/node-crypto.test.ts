@@ -226,14 +226,7 @@ describe('NodeCryptoService', () => {
 
     it('should handle encryption errors', async () => {
       const data = new TextEncoder().encode('Hello, World!');
-      const key = new Uint8Array(32);
-      
-      // Mock crypto module to throw error
-      const crypto = require('crypto');
-      const originalCreateCipheriv = crypto.createCipheriv;
-      crypto.createCipheriv = jest.fn().mockImplementation(() => {
-        throw new Error('Internal encryption error');
-      });
+      const key = new Uint8Array(16); // Invalid key length
       
       try {
         await service.encrypt(data, key);
@@ -241,8 +234,6 @@ describe('NodeCryptoService', () => {
       } catch (error) {
         expect(error).toBeInstanceOf(CryptoErrorImpl);
       }
-      
-      crypto.createCipheriv = originalCreateCipheriv;
     });
 
     it('should throw error for empty encrypted data during decryption', async () => {
@@ -298,34 +289,16 @@ describe('NodeCryptoService', () => {
   });
 
   describe('generateSalt error handling', () => {
-    it('should handle randomBytes errors', () => {
-      // Mock crypto module to throw error
-      const crypto = require('crypto');
-      const originalRandomBytes = crypto.randomBytes;
-      crypto.randomBytes = jest.fn().mockImplementation(() => {
-        throw new Error('Internal random error');
-      });
-      
-      expect(() => service.generateSalt())
+    it('should handle invalid length parameters', () => {
+      expect(() => service.generateSalt(-1))
         .toThrow(CryptoErrorImpl);
-        
-      crypto.randomBytes = originalRandomBytes;
     });
   });
 
   describe('generateIV error handling', () => {
-    it('should handle randomBytes errors', () => {
-      // Mock crypto module to throw error
-      const crypto = require('crypto');
-      const originalRandomBytes = crypto.randomBytes;
-      crypto.randomBytes = jest.fn().mockImplementation(() => {
-        throw new Error('Internal random error');
-      });
-      
-      expect(() => service.generateIV())
+    it('should handle invalid length parameters', () => {
+      expect(() => service.generateIV(-1))
         .toThrow(CryptoErrorImpl);
-        
-      crypto.randomBytes = originalRandomBytes;
     });
   });
 
