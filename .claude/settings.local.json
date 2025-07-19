@@ -26,7 +26,9 @@
       "Bash(npm install:*)",
       "Bash(npm run test:coverage:*)",
       "Bash(npm pack:*)",
-      "Bash(git tag:*)"
+      "Bash(git tag:*)",
+      "Bash(gh repo edit:*)",
+      "Bash(gh repo view:*)"
     ],
     "deny": []
   }
