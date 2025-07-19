@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a **universal password manager cryptographic library** project focused on building secure, open-source cryptographic libraries following zero-knowledge architecture principles. The project emphasizes clean separation between cryptographic operations and business logic.
 
-**Current Status**: ✅ **Production Ready v0.2.0** with full support for Node.js, CloudFlare Workers, and Browser environments.
+**Current Status**: ✅ **Production Ready v0.2.0** with full support for Node.js, CloudFlare Workers, and Browser environments. **Published to NPM** with provenance attestation.
 
 ## Architecture Principles
 
@@ -19,6 +19,15 @@ The codebase follows a four-layer zero-knowledge architecture:
 4. **Presentation interfaces** - UI and API endpoints
 
 **Dependency rule**: Inner crypto layers must remain completely independent of outer business layers.
+
+## Development Methodology
+
+✅ **Test-First Development**: This project follows a strict test-first development approach:
+- **Write tests before implementation**: All new features require comprehensive tests before any code
+- **Security-focused testing**: Crypto operations must include timing attack resistance tests
+- **Cross-environment validation**: All features tested across Node.js, WebCrypto implementations
+- **NIST compliance testing**: Standard test vectors validated for all algorithms
+- **85 tests maintained**: Comprehensive test suite with >95% coverage for all crypto operations
 
 ## TypeScript API Design Patterns
 
@@ -198,6 +207,14 @@ act push -j test -v
 - **Defense in depth**: Local tests + Act validation + GitHub CI
 
 **Configuration**: Act is configured to use `catthehacker/ubuntu:act-latest` medium Docker image in `~/.local/act/actrc`.
+
+## Release Management
+
+✅ **NPM Publishing Workflow**: 
+- **No manual retagging**: README updates and documentation changes don't require new release tags
+- **Repository field required**: package.json must include repository URL for NPM provenance attestation
+- **GitHub Actions handles releases**: Automated workflow publishes to NPM on tag creation
+- **Workflow resilience**: Release creation step handles existing releases gracefully
 
 ## Important Implementation Notes
 
